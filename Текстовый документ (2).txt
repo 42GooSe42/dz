@@ -1,75 +1,48 @@
-def find_subarray(arr, sub):
-    n = len(arr)
-    m = len(sub)
+# КС-24-1 
+# Смирнов Максим
+
+
+def find_sublist(main_list, sublist):
+    """Поиск первого вхождения подмассива"""
+    if not isinstance(main_list, (list, tuple)) or not isinstance(sublist, (list, tuple)):
+        raise TypeError("Аргументы должны быть списками или кортежами")
     
-    if m > n:
+    if not sublist:  # Пустой подмассив
+        return 0
+    if not main_list:  # Пустой основной список
         return -1
-    if m == 0:
-        return -2
     
-    for i in range(n - m + 1):
-        found = True
-        for j in range(m):
-            if arr[i + j] != sub[j]:
-                found = False
-                break
-        if found:
+    for i in range(len(main_list) - len(sublist) + 1):
+        if main_list[i:i + len(sublist)] == sublist:
             return i
     return -1
 
-def find_all(arr, sub):
-    positions = []
-    n = len(arr)
-    m = len(sub)
+
+def find_all_sublists(main_list, sublist):
+    """Поиск всех вхождений подмассива"""
+    if not isinstance(main_list, (list, tuple)) or not isinstance(sublist, (list, tuple)):
+        raise TypeError("Аргументы должны быть списками или кортежами")
     
-    if m > n or m == 0:
+    positions = []
+    if not sublist or not main_list:
         return positions
     
-    for i in range(n - m + 1):
-        if arr[i:i+m] == sub:
+    for i in range(len(main_list) - len(sublist) + 1):
+        if main_list[i:i + len(sublist)] == sublist:
             positions.append(i)
     return positions
 
-def main():
-    # задание 1
-    a = [1, 2, 3, 4, 5, 1, 2, 3, 4]
-    b = [2, 3, 4]
-    
-    res = find_subarray(a, b)
-    print(f"Массив: {a}")
-    print(f"Ищем: {b}")
-    
-    if res >= 0:
-        print(f"Найден индекс: {res}")
-        print(f"Срез: {a[res:res+len(b)]}")
-    else:
-        print("Не найдено")
-    
-    # задание 2 - все вхождения
-    c = [1, 1, 1, 2, 1, 1, 3]
-    d = [1, 1]
-    
-    all_pos = find_all(c, d)
-    print(f"\nМассив: {c}")
-    print(f"Ищем: {d}")
-    print(f"Все вхождения: {all_pos}")
-    
-    # задание 3 - ручной ввод
-    print("\nРучной ввод:")
-    try:
-        inp1 = input("Введите первый массив (числа через пробел): ")
-        inp2 = input("Введите второй массив (числа через пробел): ")
-        
-        arr1 = [int(x) for x in inp1.split()]
-        arr2 = [int(x) for x in inp2.split()]
-        
-        r = find_subarray(arr1, arr2)
-        if r >= 0:
-            print(f"Индекс: {r}")
-        else:
-            print("Не найдено")
-    except:
-        print("Ошибка ввода")
 
+# Пример использования
 if name == "main":
-    main()
+    main = [1, 2, 3, 4, 5, 1, 2, 3, 6, 7]
+    sub = [1, 2, 3]
+    
+    print(f"Первое вхождение: {find_sublist(main, sub)}")
+    print(f"Все вхождения: {find_all_sublists(main, sub)}")
+    
+    # Простые тесты
+    assert find_sublist([1,2,3,4,5], [2,3]) == 1
+    assert find_sublist([], [1,2]) == -1
+    assert find_sublist([1,2,3], []) == 0
+    print("Все тесты пройдены!")
