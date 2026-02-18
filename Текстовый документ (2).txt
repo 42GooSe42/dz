@@ -4,7 +4,6 @@
 
 
 def find_sublist(main_list, sublist):
-    """Поиск первого вхождения подмассива"""
     if not isinstance(main_list, (list, tuple)) or not isinstance(sublist, (list, tuple)):
         raise TypeError("Аргументы должны быть списками или кортежами")
     
